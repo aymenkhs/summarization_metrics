@@ -3,7 +3,6 @@ from nltk.util import ngrams, everygrams
 # f-function score
 f_score_function = lambda precision, recall : 2 * ((precision * recall) / (precision + recall))
 
-
 def rouge_n(referance, sentence, n=1):
     referance_ngrams = ngrams(reference.split(), n)
     sentence_ngrams = ngrams(sentence.split(), n)
@@ -17,9 +16,7 @@ def rouge_n(referance, sentence, n=1):
     precision = len(matching_ngrams) / len(referance_ngrams)
     f_score = f_score_function(precision, recall)
 
-
     return recall, precision, f_score
-
 
 def rouge_l(reference, sentence):
     referance_ngrams = everygrams(reference.split())
