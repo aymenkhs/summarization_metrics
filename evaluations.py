@@ -1,3 +1,6 @@
+from nltk.tokenize import word_tokenize
+from nltk.translate import meteor, chrf_score
+
 from bert_score import score
 
 from metrics import rouge_n, rouge_l
@@ -53,7 +56,16 @@ def compute_bert_score(evaluation_data):
 
 
 def compute_meteor(evaluation_data):
-    pass
+    meteor_scores = []
+    for instance in evaluation_data.index:
+        score = meteor([word_tokenize(evaluation_data.loc[instance]['referance'])],
+            word_tokenize(evaluation_data.loc[instance]['prediction']))
+        print(score)
+        meteor_scores.append(score)
+
+    evaluation_data['meteor'] = meteor_scores
+
+    return evaluation_data
 
 def compute_chrf(evaluation_data):
     pass
