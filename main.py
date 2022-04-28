@@ -11,7 +11,7 @@ def read_eval_data(path):
 def main():
     eval_data = read_eval_data('evaluation_data/meaning_cloud_samcorpus_test_results.json')
     eval_data.columns = ['prediction', 'referance']
-    evaluations.compute_rouge_n(eval_data)
+    evaluations.compute_metrics(eval_data, metrics='all')
     import pdb; pdb.set_trace()
 
 if __name__ == '__main__':
