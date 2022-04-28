@@ -6,4 +6,5 @@ env/
 venv/
 
 # data
-evaluation_data
+evaluation_data/*
+!*/.gitkeep
