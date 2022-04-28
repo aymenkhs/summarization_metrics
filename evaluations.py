@@ -39,10 +39,15 @@ def compute_bert_score(evaluation_data):
     predictions = evaluation_data['prediction'].to_list()
     referances = evaluation_data['referance'].to_list()
 
-    precision, recall, f_measure = score(predictions, referances, lang="en", verbose=True)
-    evaluation_data['bert_score_prediction'] = precision_list
-    evaluation_data['bert_score_recall' ] = recall_list
-    evaluation_data['bert_score_f_score'] = f_score_list
+    precisions, recalls, f_measures = score(predictions, referances, lang="en", verbose=True)
+
+    precisions = [float(val) for val in precisions]
+    recalls = [float(val) for val in recalls]
+    f_measures = [float(val) for val in f_measures]
+
+    evaluation_data['bert_score_prediction'] = precisions
+    evaluation_data['bert_score_recall' ] = recalls
+    evaluation_data['bert_score_f_score'] = f_measures
 
     return evaluation_data
 
