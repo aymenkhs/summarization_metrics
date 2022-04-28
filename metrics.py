@@ -12,9 +12,13 @@ def rouge_n(referance, sentence, n=1):
 
     matching_ngrams = [item for item in sentence_ngrams if item in referance_ngrams]
 
-    recall = len(matching_ngrams) / len(sentence_ngrams)
     precision = len(matching_ngrams) / len(referance_ngrams)
-    f_score = f_score_function(precision, recall)
+
+    try:
+        recall = len(matching_ngrams) / len(sentence_ngrams)
+        f_score = f_score_function(precision, recall)
+    except ZeroDivisionError as e:
+        return 0, 0, 0
 
     return recall, precision, f_score
 
