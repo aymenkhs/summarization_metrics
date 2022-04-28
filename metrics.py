@@ -10,9 +10,19 @@ def rouge_n(referance, sentence, n=1):
     referance_ngrams = [item for item in referance_ngrams]
     sentence_ngrams = [item for item in sentence_ngrams]
 
+    if len(referance_ngrams) == 0:
+        # in this case we should ignore rouge's value
+        raise ReferanceTooSmallException()
+
     matching_ngrams = [item for item in sentence_ngrams if item in referance_ngrams]
 
     precision = len(matching_ngrams) / len(referance_ngrams)
+
+    try:
+        recall = len(matching_ngrams) / len(sentence_ngrams)
+        f_score = f_score_function(precision, recall)
+    except ZeroDivisionError as e:
+        return 0, 0, 0
 
     try:
         recall = len(matching_ngrams) / len(sentence_ngrams)
@@ -37,3 +47,8 @@ def rouge_l(reference, sentence):
         longuest_common_substring = 0
 
     return longuest_common_substring
+
+class ReferanceTooSmallException(Exception):
+
+    def __str__(self):
+        return 'referance too small to execute rouge metric acuratly'

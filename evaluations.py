@@ -3,15 +3,18 @@ from nltk.translate import meteor, chrf_score
 
 from bert_score import score
 
-from metrics import rouge_n, rouge_l
+from metrics import rouge_n, rouge_l, ReferanceTooSmallException
 
 def compute_rouge_n(evaluation_data, n=1):
     f_score_list = []
     precision_list = []
     recall_list = []
     for instance in evaluation_data.index:
-        recall, precision, f_score = rouge_n(evaluation_data.loc[instance]['referance'],
-            evaluation_data.loc[instance]['prediction'], n=n)
+        try:
+            recall, precision, f_score = rouge_n(evaluation_data.loc[instance]['referance'],
+                evaluation_data.loc[instance]['prediction'], n=n)
+        except ReferanceTooSmallException as e:
+            recall, precision, f_score = None, None, None
         f_score_list.append(f_score)
         precision_list.append(precision)
         recall_list.append(recall)
