@@ -1,6 +1,6 @@
 import pandas as pd
 
-from metrics import rouge_n, rouge_l
+import evaluations
 
 # TODO: remove default evaluation data
 def read_eval_data(path = 'evaluation_data/meaning_cloud_samcorpus_test_results.json'):
@@ -11,6 +11,9 @@ def read_eval_data(path = 'evaluation_data/meaning_cloud_samcorpus_test_results.
 
 def main():
     eval_data = read_eval_data()
+    eval_data.columns = ['prediction', 'referance']
+    evaluations.compute_rouge_n(eval_data)
+    import pdb; pdb.set_trace()
 
 if __name__ == '__main__':
     main()
