@@ -1,3 +1,5 @@
+from bert_score import score
+
 from metrics import rouge_n, rouge_l
 
 def compute_rouge_n(evaluation_data, n=1):
@@ -33,7 +35,17 @@ def compute_rouge_we(evaluation_data):
     pass
 
 def compute_bert_score(evaluation_data):
-    pass
+
+    predictions = evaluation_data['prediction'].to_list()
+    referances = evaluation_data['referance'].to_list()
+
+    precision, recall, f_measure = score(predictions, referances, lang="en", verbose=True)
+    evaluation_data['bert_score_prediction'] = precision_list
+    evaluation_data['bert_score_recall' ] = recall_list
+    evaluation_data['bert_score_f_score'] = f_score_list
+
+    return evaluation_data
+
 
 def compute_meteor(evaluation_data):
     pass
