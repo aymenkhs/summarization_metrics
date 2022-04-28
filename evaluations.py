@@ -19,7 +19,15 @@ def compute_rouge_n(evaluation_data, n=1):
 
 
 def compute_rouge_l(evaluation_data):
-    pass
+    score = []
+    for instance in evaluation_data.index:
+        longuest_common_substring = rouge_l(evaluation_data.loc[instance]['referance'],
+            evaluation_data.loc[instance]['prediction'])
+        score.append(longuest_common_substring)
+
+    evaluation_data['rouge_l'] = score
+
+    return evaluation_data
 
 def compute_rouge_we(evaluation_data):
     pass
