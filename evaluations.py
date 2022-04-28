@@ -76,6 +76,6 @@ def compute_chrf(evaluation_data):
             evaluation_data.loc[instance]['prediction'])
         meteor_scores.append(score)
 
-    evaluation_data['meteor'] = meteor_scores
+    evaluation_data['chrf'] = meteor_scores
 
     return evaluation_data
