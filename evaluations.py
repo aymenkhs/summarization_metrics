@@ -5,7 +5,7 @@ from nltk.translate import meteor, chrf_score
 
 from bert_score import score
 
-from metrics import rouge_n, rouge_l, ReferanceTooSmallException
+from rouge_metrics import rouge_n, rouge_l, ReferanceTooSmallException
 
 AVAILABLE_METRICS = ['rouge1', 'rouge2', 'rouge3', 'rouge4', 'rougel',
     'bert_score', 'meteor', 'chrf']
