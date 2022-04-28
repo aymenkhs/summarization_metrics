@@ -60,7 +60,6 @@ def compute_meteor(evaluation_data):
     for instance in evaluation_data.index:
         score = meteor([word_tokenize(evaluation_data.loc[instance]['referance'])],
             word_tokenize(evaluation_data.loc[instance]['prediction']))
-        print(score)
         meteor_scores.append(score)
 
     evaluation_data['meteor'] = meteor_scores
@@ -68,4 +67,12 @@ def compute_meteor(evaluation_data):
     return evaluation_data
 
 def compute_chrf(evaluation_data):
-    pass
+    meteor_scores = []
+    for instance in evaluation_data.index:
+        score = chrf_score.sentence_chrf(evaluation_data.loc[instance]['referance'],
+            evaluation_data.loc[instance]['prediction'])
+        meteor_scores.append(score)
+
+    evaluation_data['meteor'] = meteor_scores
+
+    return evaluation_data
