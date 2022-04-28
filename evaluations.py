@@ -1,9 +1,14 @@
+import re
+
 from nltk.tokenize import word_tokenize
 from nltk.translate import meteor, chrf_score
 
 from bert_score import score
 
 from metrics import rouge_n, rouge_l, ReferanceTooSmallException
+
+AVAILABLE_METRICS = ['rouge1', 'rouge2', 'rouge3', 'rouge4', 'rougel',
+    'bert_score', 'meteor', 'chrf']
 
 def compute_rouge_n(evaluation_data, n=1):
     f_score_list = []
@@ -77,5 +82,30 @@ def compute_chrf(evaluation_data):
         meteor_scores.append(score)
 
     evaluation_data['chrf'] = meteor_scores
+
+    return evaluation_data
+
+
+def compute_metrics(evaluation_data, metrics):
+
+    if metrics.lower() == 'all':
+        metrics = AVAILABLE_METRICS
+    else:
+        metrics = [metric.lower() for metric in metrics if metric.lower() in AVAILABLE_METRICS]
+
+    for metric in metrics:
+
+        print(metric)
+
+        if re.match('rouge[1-9]', metric) is not None:
+            evaluation_data = compute_rouge_n(evaluation_data, n=int(metric[5]))
+        elif metric == 'rougel':
+            evaluation_data = compute_rouge_l(evaluation_data)
+        elif metric == 'bert_score':
+            evaluation_data = compute_bert_score(evaluation_data)
+        elif metric == 'meteor':
+            evaluation_data = compute_meteor(evaluation_data)
+        elif metric == 'chrf':
+            evaluation_data = compute_chrf(evaluation_data)
 
     return evaluation_data
