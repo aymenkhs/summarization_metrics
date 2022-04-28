@@ -31,6 +31,9 @@ def rouge_l(reference, sentence):
 
     matching_ngrams = [item for item in sentence_ngrams if item in referance_ngrams]
 
-    longuest_common_substring = len(matching_ngrams[-1])
+    if len(matching_ngrams) > 0:
+        longuest_common_substring = len(matching_ngrams[-1])
+    else:
+        longuest_common_substring = 0
 
     return longuest_common_substring
