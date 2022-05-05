@@ -24,7 +24,7 @@ def compute_rouge_n(evaluation_data, n=1):
         precision_list.append(precision)
         recall_list.append(recall)
 
-    evaluation_data['rouge_{}_prediction'.format(n)] = precision_list
+    evaluation_data['rouge_{}_precision'.format(n)] = precision_list
     evaluation_data['rouge_{}_recall'.format(n)] = recall_list
     evaluation_data['rouge_{}_f_score'.format(n)] = f_score_list
 
@@ -56,7 +56,7 @@ def compute_bert_score(evaluation_data):
     recalls = [float(val) for val in recalls]
     f_measures = [float(val) for val in f_measures]
 
-    evaluation_data['bert_score_prediction'] = precisions
+    evaluation_data['bert_score_precision'] = precisions
     evaluation_data['bert_score_recall' ] = recalls
     evaluation_data['bert_score_f_score'] = f_measures
 
